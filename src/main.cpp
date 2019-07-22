@@ -3,6 +3,7 @@
 #include <cstring>
 #include <iostream>
 #include "Path.h"
+#include "Util.h"
 
 int main() {
   std::cout << "listing: " + Path::basePath() << std::endl;
@@ -11,6 +12,10 @@ int main() {
   char char_command[n+1];
   strcpy(char_command, command.c_str());
   std::system(char_command);
+
+  Util u;
+  std::cout << u.convertToTime(403909) << std::endl;
+  std::cout << u.getProgressBar("99%") << std::endl;
   return 0;
 
   System system;

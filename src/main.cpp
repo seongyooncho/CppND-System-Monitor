@@ -14,12 +14,11 @@ int main() {
   strcpy(char_command, command.c_str());
   std::system(char_command);
 
-  Util u;
-  std::cout << u.convertToTime(403909) << std::endl;
-  std::cout << u.getProgressBar("99%") << std::endl;
+  std::cout << Util::convertToTime(403909) << std::endl;
+  std::cout << Util::getProgressBar("99%") << std::endl;
 
-  ProcessParser p;
-  std::cout << p.getVmSize("1003") << std::endl;
+  std::cout << ProcessParser::getVmSize("1003") << std::endl;
+  std::cout << ProcessParser::getCpuPercent("1003") << std::endl;
 
   return 0;
 

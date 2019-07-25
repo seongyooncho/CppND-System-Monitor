@@ -104,4 +104,16 @@ std::string ProcessParser::getProcUpTime(std::string pid) {
   return  std::to_string(result);
 }
 
+long int ProcessParser::getSysUpTime() {
+  std::string line;
+  std::string value;
+  std::ifstream stream = Util::getStream((Path::basePath() + Path::upTimePath()));
+  std::getline(stream, line);
+  std::istringstream buf(line);
+  std::istream_iterator<std::string> beg(buf), end;
+  std::vector<std::string> values(beg, end);
+
+  return  stoi(values[0]);
+}
+
 #endif

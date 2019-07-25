@@ -163,4 +163,11 @@ std::vector<std::string> ProcessParser::getPidList() {
 
 }
 
+std::string ProcessParser::getCmd(std::string pid) {
+  std::string line;
+  std::ifstream stream = Util::getStream((Path::basePath() + pid + Path::cmdPath()));
+  std::getline(stream, line);
+  return line;
+}
+
 #endif

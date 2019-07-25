@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Path.h"
 #include "Util.h"
+#include "ProcessParser.h"
 
 int main() {
   std::cout << "listing: " + Path::basePath() << std::endl;
@@ -16,6 +17,10 @@ int main() {
   Util u;
   std::cout << u.convertToTime(403909) << std::endl;
   std::cout << u.getProgressBar("99%") << std::endl;
+
+  ProcessParser p;
+  std::cout << p.getVmSize("1003") << std::endl;
+
   return 0;
 
   System system;

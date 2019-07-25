@@ -87,4 +87,21 @@ std::string ProcessParser::getCpuPercent(std::string pid) {
   return std::to_string(result);
 }
 
+std::string ProcessParser::getProcUpTime(std::string pid) {
+  std::string line;
+  std::string value;
+  float result;
+
+  std::ifstream stream = Util::getStream((Path::basePath() + pid + "/" + Path::statPath()));
+  std::getline(stream, line);
+  std::istringstream buf(line);
+  std::istream_iterator<std::string> beg(buf), end;
+  std::vector<std::string> values(beg, end);
+
+  float freq = sysconf(_SC_CLK_TCK);
+  result = stof(values[13]) / freq;
+
+  return  std::to_string(result);
+}
+
 #endif

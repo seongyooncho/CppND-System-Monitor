@@ -19,10 +19,9 @@
 #include <dirent.h>
 #include <time.h>
 #include <unistd.h>
-//#include <constants.h>
+#include "constants.h"
 
-#include "Path.h"
-#include "Util.h"
+#include "util.h"
 
 class ProcessParser {
   public:
@@ -38,6 +37,7 @@ class ProcessParser {
     static std::string getSysKernelVersion();
     static int getTotalThreads();
     static int getTotalNumberOfProcesses();
+    static int getNumberOfCores();
     static int getNumberOfRunningProcesses();
     static string getOsName();
     static std::string printCpuStats(std::vector<std::string> values1, std::vector<std::string>values2);
@@ -168,6 +168,22 @@ std::string ProcessParser::getCmd(std::string pid) {
   std::ifstream stream = Util::getStream((Path::basePath() + pid + Path::cmdPath()));
   std::getline(stream, line);
   return line;
+}
+
+int ProcessParser::getNumberOfCores() {
+  std::string line;
+  std::string name = "cpu cores";
+
+  std::ifstream stream = Util::getStream((Path::basePath() + "cpuinfo"));
+  while(std::getline(stream, line)) {
+    if (line.compare(0, name.size(), name) == 0) {
+      std::istringstream buf(line);
+      std::istream_iterator<std::string> beg(buf), end;
+      std::vector<std::string> values(beg, end);
+      return stoi(values[3]);
+    }
+  }
+  return 0;
 }
 
 #endif

@@ -45,5 +45,4 @@ std::ifstream Util::getStream (std::string path)
   return stream;
 }
 
-
 #endif

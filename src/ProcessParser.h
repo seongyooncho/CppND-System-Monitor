@@ -62,4 +62,29 @@ std::string ProcessParser::getVmSize(std::string pid) {
   return std::to_string(result);
 }
 
+std::string ProcessParser::getCpuPercent(std::string pid) {
+  std::string line;
+  std::string value;
+  float result;
+
+  std::ifstream stream = Util::getStream((Path::basePath() + pid + "/" + Path::statPath()));
+  std::getline(stream, line);
+  std::istringstream buf(line);
+  std::istream_iterator<std::string> beg(buf), end;
+  std::vector<std::string> values(beg, end);
+
+  float utime = stof(ProcessParser::getProcUpTime(pid));
+  float stime = stof(values[14]);
+  float cutime = stof(values[15]);
+  float cstime = stof(values[16]);
+  float starttime = stof(values[21]);
+  float uptime = ProcessParser::getSysUpTime();
+  float freq = sysconf(_SC_CLK_TCK);
+  float total_time = utime + stime + cutime + cstime;
+  float seconds = uptime - (starttime / freq);
+  result = 100.0 * ((total_time / freq) / seconds);
+
+  return std::to_string(result);
+}
+
 #endif

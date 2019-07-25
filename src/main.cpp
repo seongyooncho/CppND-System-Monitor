@@ -19,6 +19,7 @@ int main() {
 
   std::cout << ProcessParser::getVmSize("1003") << std::endl;
   std::cout << ProcessParser::getCpuPercent("1003") << std::endl;
+  std::cout << ProcessParser::getProcUser("1003") << std::endl;
 
   return 0;
 

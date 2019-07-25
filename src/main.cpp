@@ -17,9 +17,15 @@ int main() {
   std::cout << Util::convertToTime(403909) << std::endl;
   std::cout << Util::getProgressBar("99%") << std::endl;
 
-  std::cout << ProcessParser::getVmSize("1003") << std::endl;
-  std::cout << ProcessParser::getCpuPercent("1003") << std::endl;
-  std::cout << ProcessParser::getProcUser("1003") << std::endl;
+  std::cout << ProcessParser::getVmSize("1011") << std::endl;
+  std::cout << ProcessParser::getCpuPercent("1011") << std::endl;
+  std::cout << ProcessParser::getProcUser("1011") << std::endl;
+
+  auto pids = ProcessParser::getPidList();
+  for (auto p : pids) {
+    std::cout << p << " ";
+  } 
+  std::cout << std::endl;
 
   return 0;
 

@@ -37,10 +37,13 @@ class ProcessParser {
     static std::string getSysKernelVersion();
     static int getTotalThreads();
     static int getTotalNumberOfProcesses();
-    static int getNumberOfCores();
     static int getNumberOfRunningProcesses();
     static string getOsName();
     static std::string printCpuStats(std::vector<std::string> values1, std::vector<std::string>values2);
+  private:
+    static int getNumberOfCores();
+    static float get_sys_active_cpu_time(std::vector<std::string> values);
+    static float get_sys_idle_cpu_time(std::vector<std::string> values);
 };
 
 std::string ProcessParser::getVmSize(std::string pid) {
@@ -184,6 +187,37 @@ int ProcessParser::getNumberOfCores() {
     }
   }
   return 0;
+}
+
+std::vector<std::string> ProcessParser::getSysCpuPercent(std::string coreNumber) {
+  std::string line;
+  std::string name = "cpu" + coreNumber;
+
+  std::ifstream stream = Util::getStream((Path::basePath() + Path::statPath()));
+  while(std::getline(stream, line)) {
+    if (line.compare(0, name.size(), name) == 0) {
+      std::istringstream buf(line);
+      std::istream_iterator<std::string> beg(buf), end;
+      std::vector<std::string> values(beg, end);
+      return values;
+    }
+  }
+  return (std::vector<std::string>());
+}
+
+float ProcessParser::get_sys_active_cpu_time(std::vector<std::string> values) {
+  return (stof(values[S_USER]) +
+          stof(values[S_NICE]) +
+          stof(values[S_SYSTEM]) +
+          stof(values[S_IRQ]) +
+          stof(values[S_SOFTIRQ]) +
+          stof(values[S_STEAL]) +
+          stof(values[S_GUEST]) +
+          stof(values[S_GUEST_NICE]));
+}
+float ProcessParser::get_sys_idle_cpu_time(std::vector<std::string> values) {
+  return (stof(values[S_IDLE]) +
+          stof(values[S_IOWAIT]));
 }
 
 #endif

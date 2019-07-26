@@ -220,4 +220,12 @@ float ProcessParser::get_sys_idle_cpu_time(std::vector<std::string> values) {
           stof(values[S_IOWAIT]));
 }
 
+std::string ProcessParser::printCpuStats(std::vector<std::string> values1, std::vector<std::string>values2) {
+  float activeTime = get_sys_active_cpu_time(values2) - get_sys_active_cpu_time(values1);
+  float idleTime = get_sys_idle_cpu_time(values2) - get_sys_idle_cpu_time(values1);
+  float totalTime = activeTime + idleTime;
+  float result = 100.0 * (activeTime / totalTime);
+  return std::to_string(result);
+}
+
 #endif

@@ -39,8 +39,8 @@ class ProcessParser {
     static int getNumberOfRunningProcesses();
     static std::string getOsName();
     static std::string printCpuStats(std::vector<std::string> values1, std::vector<std::string>values2);
-  private:
     static int getNumberOfCores();
+  private:
     static float get_sys_active_cpu_time(std::vector<std::string> values);
     static float get_sys_idle_cpu_time(std::vector<std::string> values);
 };

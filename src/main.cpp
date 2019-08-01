@@ -5,6 +5,8 @@
 #include "constants.h"
 #include "util.h"
 #include "ProcessParser.h"
+#include "SysInfo.h"
+#include "process.h"
 
 int main() {
   std::cout << "listing: " + Path::basePath() << std::endl;

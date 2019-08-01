@@ -7,6 +7,7 @@
 #include "ProcessParser.h"
 #include "SysInfo.h"
 #include "process.h"
+#include "ProcessContainer.h"
 
 int main() {
   std::cout << "listing: " + Path::basePath() << std::endl;
